@@ -1,3 +1,4 @@
+let duplicates = []; // Array to store the duplicate ArrowHelpers
 window.onload = function () {
     const container = document.querySelector('#canvas-container');
     const loader = new THREE.GLTFLoader();
@@ -82,10 +83,21 @@ window.onload = function () {
     }
     document.getElementById("noroughnessbutton").addEventListener("click", setRoughnessToZero);
 
+    roughness_flag = false;
+
+
+
 
 
     function setRoughnessToZero() {
+        roughness_flag = false;
         sheetMaterial.roughness = 0;
+
+        // Remove all duplicates from the scene and clear the array
+        duplicates.forEach(duplicate => {
+            scene.remove(duplicate);
+        });
+        duplicates = []; // Clear the array
 
         slider.value = 0; // Set the initial value of the slider to 0
 
@@ -127,6 +139,9 @@ window.onload = function () {
 
 
 
+
+
+
         };
 
 
@@ -135,6 +150,7 @@ window.onload = function () {
     document.getElementById("roughnessbutton").addEventListener("click", setRoughnessToTrue);
 
     function setRoughnessToTrue() {
+        roughness_flag = true;
         sheetMaterial.roughness = 1;
 
         slider.value = 0; // Set the initial value of the slider to 0
@@ -144,7 +160,7 @@ window.onload = function () {
         initial_light.rotation.set(0, 0, 0); // Resets the rotation for x, y, and z axes
         reflected_light.rotation.set(0, 0, 0);
 
-        let duplicates = []; // Array to store the duplicate ArrowHelpers
+        //let duplicates = []; // Array to store the duplicate ArrowHelpers
 
         for (let i = 0; i < 5; i++) {
             // Create duplicates with the same initial properties
@@ -186,6 +202,8 @@ window.onload = function () {
             // Rotate the reflected light clockwise around the z-axis
             reflected_light.rotateOnAxis(axis, -angleInRadians);
 
+
+            //added random offset to the angle to represent diffraction in a rough surface
             duplicates.forEach((duplicate, index) => {
                 // Randomize angle slightly around the main angle
                 let randomOffset = THREE.Math.degToRad(Math.random() * 10 - 5); // +/- 5 degree offset in radians
