@@ -34,7 +34,7 @@ window.onload = function () {
     });
 
 
-    let sheetGeometry = new THREE.PlaneGeometry(10, 11, 10);
+    let sheetGeometry = new THREE.PlaneGeometry(9, 10, 10);
 
     let sheet = new THREE.Mesh(sheetGeometry, sheetMaterial);
 
