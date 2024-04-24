@@ -206,7 +206,7 @@ window.onload = function () {
             //added random offset to the angle to represent diffraction in a rough surface
             duplicates.forEach((duplicate, index) => {
                 // Randomize angle slightly around the main angle
-                let randomOffset = THREE.Math.degToRad(Math.random() * 10 - 5); // +/- 5 degree offset in radians
+                let randomOffset = THREE.Math.degToRad(Math.random() * 20); // +/- 5 degree offset in radians
                 let adjustedAngle = angleInRadians + randomOffset;
 
                 duplicate.rotation.set(0, 0, 0);
