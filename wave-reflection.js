@@ -116,6 +116,13 @@ window.onload = function () {
             // Rotate the reflected light clockwise around the z-axis
             reflected_light.rotateOnAxis(axis, -angleInRadians);
 
+            reflected_light.line.material.transparent = true;
+            reflected_light.line.material.opacity = 1;
+
+            reflected_light.cone.material.transparent = true;
+
+            reflected_light.cone.material.opacity = 1;
+
 
 
 
@@ -138,6 +145,8 @@ window.onload = function () {
         reflected_light.rotation.set(0, 0, 0);
 
 
+
+
         slider.oninput = function () {
             let angle = parseFloat(this.value); // Get angle in degrees from the slider
             angleValue.textContent = angle + '°'; // Update the displayed angle value
@@ -158,16 +167,14 @@ window.onload = function () {
             reflected_light.rotation.set(0, 0, 0);
 
             reflected_light.line.material.transparent = true;
-            reflected_light.line.material.opacity = 0.5;
+            reflected_light.line.material.opacity = 0.4;
 
             reflected_light.cone.material.transparent = true;
 
-            reflected_light.cone.material.opacity = 0.5;
+            reflected_light.cone.material.opacity = 0.4;
 
             // Rotate the reflected light clockwise around the z-axis
             reflected_light.rotateOnAxis(axis, -angleInRadians);
-
-
 
 
         };
