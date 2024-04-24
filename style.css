@@ -44,9 +44,10 @@ html {
 
 .slider-container {
     position: fixed;
-    bottom: 20px;
-    left: 200px;
+    bottom: 250px;
+    left: 280px;
     transform: translateX(-50%);
     background: white;
-    padding: 10px;
+    padding: 30px;
+    font-size: 30px;
 }

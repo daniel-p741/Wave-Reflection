@@ -87,6 +87,13 @@ window.onload = function () {
     function setRoughnessToZero() {
         sheetMaterial.roughness = 0;
 
+        slider.value = 0; // Set the initial value of the slider to 0
+
+        angleValue.textContent = '0°'; // Set the initial value of the displayed angle to 0°
+
+        initial_light.rotation.set(0, 0, 0); // Resets the rotation for x, y, and z axes
+        reflected_light.rotation.set(0, 0, 0);
+
         slider.oninput = function () {
             let angle = parseFloat(this.value); // Get angle in degrees from the slider
             angleValue.textContent = angle + '°'; // Update the displayed angle value
@@ -114,6 +121,8 @@ window.onload = function () {
 
 
         };
+
+
     };
 
     document.getElementById("roughnessbutton").addEventListener("click", setRoughnessToTrue);
@@ -121,6 +130,13 @@ window.onload = function () {
     function setRoughnessToTrue() {
         sheetMaterial.roughness = 1;
 
+        slider.value = 0; // Set the initial value of the slider to 0
+
+        angleValue.textContent = '0°'; // Set the initial value of the displayed angle to 0°
+
+        initial_light.rotation.set(0, 0, 0); // Resets the rotation for x, y, and z axes
+        reflected_light.rotation.set(0, 0, 0);
+
 
         slider.oninput = function () {
             let angle = parseFloat(this.value); // Get angle in degrees from the slider
@@ -147,6 +163,8 @@ window.onload = function () {
 
 
         };
+
+
 
     }
 
