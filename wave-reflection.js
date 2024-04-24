@@ -66,10 +66,12 @@ window.onload = function () {
 
     scene.add(line);
 
-    let initial_light = new THREE.ArrowHelper(new THREE.Vector3(1, -1, 0), new THREE.Vector3(line.position.x - .05, 3, 0), 5, 0xffff00);
+    //let initial_light = new THREE.ArrowHelper(new THREE.Vector3(1, -1, 0), new THREE.Vector3(line.position.x - .05, 3, 0), 5, 0xffff00);
 
-    let reflected_light = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 0), new THREE.Vector3(line.position.x + .05, -2, 0), 5, 0xffff00);
+    let initial_light = new THREE.ArrowHelper(new THREE.Vector3(1, -1, 0), new THREE.Vector3(points[1].x, points[1].y + 5, points[1].z), 5, 0xffff00);
 
+    //let reflected_light = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 0), new THREE.Vector3(line.position.x + .05, -2, 0), 5, 0xffff00);
+    let reflected_light = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 0), new THREE.Vector3(points[1].x, points[1].y, points[1].z), 5, 0xffff00);
     scene.add(initial_light, reflected_light);
 
     let slider = document.getElementById("incidentAngle");
@@ -78,6 +80,8 @@ window.onload = function () {
     slider.oninput = function () {
         let angle = this.value;
         angleValue.textContent = angle; // update the displayed angle value
+
+
     };
 
 
