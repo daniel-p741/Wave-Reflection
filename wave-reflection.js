@@ -204,18 +204,19 @@ window.onload = function () {
 
 
             //added random offset to the angle to represent diffraction in a rough surface
-            duplicates.forEach((duplicate, index) => {
-                // Randomize angle slightly around the main angle
-                let randomOffset = THREE.Math.degToRad(Math.random() * 20); // +/- 5 degree offset in radians
+            let isVisible = !reflected_light.rotation.equals(new THREE.Euler(0, 0, 0)); // Visibility flag
+            duplicates.forEach((duplicate) => {
+                let randomOffset = THREE.Math.degToRad(Math.random() * 30);
                 let adjustedAngle = angleInRadians + randomOffset;
 
                 duplicate.rotation.set(0, 0, 0);
                 duplicate.rotateOnAxis(axis, -adjustedAngle);
+                duplicate.visible = isVisible; // Set visibility based on the flag
 
                 duplicate.line.material.transparent = true;
-                duplicate.line.material.opacity = 1;
+                duplicate.line.material.opacity = isVisible ? .4 : 0;
                 duplicate.cone.material.transparent = true;
-                duplicate.cone.material.opacity = 1;
+                duplicate.cone.material.opacity = isVisible ? .4 : 0;
             });
 
 
