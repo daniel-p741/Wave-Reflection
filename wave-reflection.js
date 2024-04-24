@@ -144,6 +144,16 @@ window.onload = function () {
         initial_light.rotation.set(0, 0, 0); // Resets the rotation for x, y, and z axes
         reflected_light.rotation.set(0, 0, 0);
 
+        let duplicates = []; // Array to store the duplicate ArrowHelpers
+
+        for (let i = 0; i < 5; i++) {
+            // Create duplicates with the same initial properties
+            let duplicate = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 0), reflected_position, 5, 0xffff00);
+            scene.add(duplicate);
+            duplicates.push(duplicate);
+        }
+
+
 
 
 
@@ -175,6 +185,20 @@ window.onload = function () {
 
             // Rotate the reflected light clockwise around the z-axis
             reflected_light.rotateOnAxis(axis, -angleInRadians);
+
+            duplicates.forEach((duplicate, index) => {
+                // Randomize angle slightly around the main angle
+                let randomOffset = THREE.Math.degToRad(Math.random() * 10 - 5); // +/- 5 degree offset in radians
+                let adjustedAngle = angleInRadians + randomOffset;
+
+                duplicate.rotation.set(0, 0, 0);
+                duplicate.rotateOnAxis(axis, -adjustedAngle);
+
+                duplicate.line.material.transparent = true;
+                duplicate.line.material.opacity = 1;
+                duplicate.cone.material.transparent = true;
+                duplicate.cone.material.opacity = 1;
+            });
 
 
         };
