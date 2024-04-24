@@ -26,9 +26,7 @@ window.onload = function () {
         side: THREE.DoubleSide
     });
 
-    document.getElementById("noroughnessbutton").addEventListener("click", function () {
-        sheetMaterial.roughness = 0;
-    });
+
 
     document.getElementById("roughnessbutton").addEventListener("click", function () {
         sheetMaterial.roughness = 1;
@@ -66,24 +64,55 @@ window.onload = function () {
 
     scene.add(line);
 
-    //let initial_light = new THREE.ArrowHelper(new THREE.Vector3(1, -1, 0), new THREE.Vector3(line.position.x - .05, 3, 0), 5, 0xffff00);
 
-    let initial_light = new THREE.ArrowHelper(new THREE.Vector3(1, -1, 0), new THREE.Vector3(points[1].x, points[1].y + 5, points[1].z), 5, 0xffff00);
+    initial_position = new THREE.Vector3(points[1].x, points[1].y + 5, points[1].z);
 
-    //let reflected_light = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 0), new THREE.Vector3(line.position.x + .05, -2, 0), 5, 0xffff00);
-    let reflected_light = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 0), new THREE.Vector3(points[1].x, points[1].y, points[1].z), 5, 0xffff00);
+    //let initial_light = new THREE.ArrowHelper(new THREE.Vector3(1, -1, 0), initial_position, 5, 0xffff00);
+    let initial_light = new THREE.ArrowHelper(new THREE.Vector3(-1, 1, 0), new THREE.Vector3(points[1].x, points[1].y, points[1].z), 5, 0xffff00);
+
+    reflected_position = new THREE.Vector3(points[1].x, points[1].y, points[1].z);
+    let reflected_light = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 0), reflected_position, 5, 0xffff00);
     scene.add(initial_light, reflected_light);
 
     let slider = document.getElementById("incidentAngle");
     let angleValue = document.getElementById("angleValue");
+    let executeByDefault = true;
+    if (executeByDefault) {
+        setRoughnessToZero();
+    }
+    document.getElementById("noroughnessbutton").addEventListener("click", setRoughnessToZero);
 
-    slider.oninput = function () {
-        let angle = this.value;
-        angleValue.textContent = angle; // update the displayed angle value
 
 
+    function setRoughnessToZero() {
+        sheetMaterial.roughness = 0;
+
+        slider.oninput = function () {
+            let angle = parseFloat(this.value); // Get angle in degrees from the slider
+            angleValue.textContent = angle + '°'; // Update the displayed angle value
+
+            // Convert the angle from degrees to radians
+            let angleInRadians = THREE.Math.degToRad(angle);
+
+            // Define the axis of rotation (in this case, the z-axis)
+            let axis = new THREE.Vector3(0, 0, 1);
+
+            // Reset the rotation of the initial light
+            initial_light.rotation.set(0, 0, 0);
+
+            // Rotate the initial light counterclockwise around the z-axis
+            initial_light.rotateOnAxis(axis, angleInRadians);
+
+            // Reset the rotation of the reflected light
+            reflected_light.rotation.set(0, 0, 0);
+
+            // Rotate the reflected light clockwise around the z-axis
+            reflected_light.rotateOnAxis(axis, -angleInRadians);
+
+
+
+        };
     };
-
 
 
     //const light = new THREE.PointLight(0xFFFFFF, 1, 100);
