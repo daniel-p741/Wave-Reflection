@@ -39,3 +39,14 @@ html {
     cursor: pointer;
     font-family: 'Roboto', sans-serif;
 }
+
+
+
+.slider-container {
+    position: fixed;
+    bottom: 20px;
+    left: 200px;
+    transform: translateX(-50%);
+    background: white;
+    padding: 10px;
+}

@@ -35,21 +35,7 @@ window.onload = function () {
     });
 
 
-    //document.getElementById("silverbutton").addEventListener("click", function () {
-    //    sheetMaterial.color.setHex(0x888888);
-    //    sheetMaterial.metalness = 0.5;
-    //    sheetMaterial.roughness = 0.5;
-    //    sheetMaterial.needsUpdate = true;
-    //});
-
-
-
     let sheetGeometry = new THREE.PlaneGeometry(10, 11, 10);
-
-
-
-
-
 
     let sheet = new THREE.Mesh(sheetGeometry, sheetMaterial);
 
@@ -57,6 +43,43 @@ window.onload = function () {
 
     sheet.rotation.x = Math.PI / 2;
     scene.add(sheet);
+
+
+
+
+    // Calculate the height of the visible area at the position of the camera
+    //var aspect = window.innerWidth / window.innerHeight;
+    var vFOV = camera.fov * Math.PI / 180; // convert vertical fov to radians
+    var height = 2 * Math.tan(vFOV / 2) * camera.position.z; // visible height
+
+    // Calculate the y-coordinate of the top of the screen
+    var topOfScreen = camera.position.y + height / 2;
+
+    let points = [];
+
+    points.push(new THREE.Vector3(0, topOfScreen, 0)); // Start at the top of the screen
+    points.push(new THREE.Vector3(0, sheet.position.y, 0)); // End at the origin
+
+    let geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+    let line = new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: 0x0000ff }));
+
+    scene.add(line);
+
+    let initial_light = new THREE.ArrowHelper(new THREE.Vector3(1, -1, 0), new THREE.Vector3(line.position.x - .05, 3, 0), 5, 0xffff00);
+
+    let reflected_light = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 0), new THREE.Vector3(line.position.x + .05, -2, 0), 5, 0xffff00);
+
+    scene.add(initial_light, reflected_light);
+
+    let slider = document.getElementById("incidentAngle");
+    let angleValue = document.getElementById("angleValue");
+
+    slider.oninput = function () {
+        let angle = this.value;
+        angleValue.textContent = angle; // update the displayed angle value
+    };
+
 
 
     //const light = new THREE.PointLight(0xFFFFFF, 1, 100);
