@@ -157,8 +157,16 @@ window.onload = function () {
             // Reset the rotation of the reflected light
             reflected_light.rotation.set(0, 0, 0);
 
+            reflected_light.line.material.transparent = true;
+            reflected_light.line.material.opacity = 0.5;
+
+            reflected_light.cone.material.transparent = true;
+
+            reflected_light.cone.material.opacity = 0.5;
+
             // Rotate the reflected light clockwise around the z-axis
             reflected_light.rotateOnAxis(axis, -angleInRadians);
+
 
 
 
