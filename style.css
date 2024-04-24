@@ -47,7 +47,7 @@ html {
     margin: 20px;
     position: absolute;
     top: 80px;
-    left: 10px;
+    left: -10px;
     z-index: 10;
 }
 
@@ -62,7 +62,7 @@ html {
 .slider {
     -webkit-appearance: none;
     appearance: none;
-    width: 210px;
+    width: 190px;
     /* You can adjust this width as needed */
     height: 15px;
     background: #d3d3d3;
