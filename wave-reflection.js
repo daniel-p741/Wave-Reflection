@@ -70,6 +70,8 @@ window.onload = function () {
 
     //let initial_light = new THREE.ArrowHelper(new THREE.Vector3(1, -1, 0), initial_position, 5, 0xffff00);
     let initial_light = new THREE.ArrowHelper(new THREE.Vector3(-1, 1, 0), initial_position, 5, 0xffff00);
+    initial_light.cone.material.transparent = true;
+    initial_light.cone.material.opacity = 0;
 
     reflected_position = new THREE.Vector3(points[1].x, points[1].y, points[1].z);
     let reflected_light = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 0), reflected_position, 5, 0xffff00);
