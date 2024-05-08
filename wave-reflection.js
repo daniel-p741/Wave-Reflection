@@ -1,4 +1,5 @@
 let duplicates = []; // Array to store the duplicate ArrowHelpers
+let angle = 0; // Initial angle value
 window.onload = function () {
     const container = document.querySelector('#canvas-container');
     const loader = new THREE.GLTFLoader();
@@ -101,15 +102,18 @@ window.onload = function () {
         });
         duplicates = []; // Clear the array
 
-        slider.value = 0; // Set the initial value of the slider to 0
+        slider.value = angle; // Set the initial value of the slider to 0
 
-        angleValue.textContent = '0°'; // Set the initial value of the displayed angle to 0°
+        angleValue.textContent = angle + '°'; // Set the initial value of the displayed angle to 0°
 
         initial_light.rotation.set(0, 0, 0); // Resets the rotation for x, y, and z axes
         reflected_light.rotation.set(0, 0, 0);
 
+        initial_light.rotation.set(0, 0, THREE.Math.degToRad(angle)); // Resets the rotation for x, y, and z axes
+        reflected_light.rotation.set(0, 0, THREE.Math.degToRad(-angle));
+
         slider.oninput = function () {
-            let angle = parseFloat(this.value); // Get angle in degrees from the slider
+            angle = parseFloat(this.value); // Get angle in degrees from the slider
             angleValue.textContent = angle + '°'; // Update the displayed angle value
 
             // Convert the angle from degrees to radians
@@ -182,7 +186,7 @@ window.onload = function () {
 
 
         slider.oninput = function () {
-            let angle = parseFloat(this.value); // Get angle in degrees from the slider
+            angle = parseFloat(this.value); // Get angle in degrees from the slider
             angleValue.textContent = angle + '°'; // Update the displayed angle value
 
             // Convert the angle from degrees to radians
