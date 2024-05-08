@@ -159,12 +159,17 @@ window.onload = function () {
         roughness_flag = true;
         sheetMaterial.roughness = 1;
 
-        slider.value = 0; // Set the initial value of the slider to 0
+        slider.value = angle; // Set the initial value of the slider to 0
 
-        angleValue.textContent = '0°'; // Set the initial value of the displayed angle to 0°
+        angleValue.textContent = angle + '°'; // Set the initial value of the displayed angle to 0°
 
         initial_light.rotation.set(0, 0, 0); // Resets the rotation for x, y, and z axes
         reflected_light.rotation.set(0, 0, 0);
+
+        initial_light.rotation.set(0, 0, THREE.Math.degToRad(angle)); // Resets the rotation for x, y, and z axes
+
+        reflected_light.rotation.set(0, 0, THREE.Math.degToRad(-angle));
+
 
         //let duplicates = []; // Array to store the duplicate ArrowHelpers
 
