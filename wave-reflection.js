@@ -164,6 +164,12 @@ window.onload = function () {
 
         //let duplicates = []; // Array to store the duplicate ArrowHelpers
 
+        duplicates.forEach(duplicate => {
+            scene.remove(duplicate);
+        });
+
+        duplicates = []; // Clear the array
+
         for (let i = 0; i < 5; i++) {
             // Create duplicates with the same initial properties
             let duplicate = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 0), reflected_position, 5, 0xffff00);
