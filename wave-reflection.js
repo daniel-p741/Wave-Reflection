@@ -160,87 +160,65 @@ window.onload = function () {
         sheetMaterial.roughness = 1;
 
         slider.value = angle; // Set the initial value of the slider to 0
-
         angleValue.textContent = angle + '°'; // Set the initial value of the displayed angle to 0°
 
         initial_light.rotation.set(0, 0, 0); // Resets the rotation for x, y, and z axes
         reflected_light.rotation.set(0, 0, 0);
 
         initial_light.rotation.set(0, 0, THREE.Math.degToRad(angle)); // Resets the rotation for x, y, and z axes
-
         reflected_light.rotation.set(0, 0, THREE.Math.degToRad(-angle));
 
-
-        //let duplicates = []; // Array to store the duplicate ArrowHelpers
-
+        // Clear existing duplicates
         duplicates.forEach(duplicate => {
             scene.remove(duplicate);
         });
-
         duplicates = []; // Clear the array
 
-        for (let i = 0; i < 5; i++) {
-            // Create duplicates with the same initial properties
-            let duplicate = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 0), reflected_position, 5, 0xffff00);
-            scene.add(duplicate);
-            duplicates.push(duplicate);
-        }
+        // Create and position duplicates
+        createAndPositionDuplicates();
 
-
-
-
-
+        // Adjust duplicates dynamically with the slider
         slider.oninput = function () {
             angle = parseFloat(this.value); // Get angle in degrees from the slider
             angleValue.textContent = angle + '°'; // Update the displayed angle value
 
-            // Convert the angle from degrees to radians
             let angleInRadians = THREE.Math.degToRad(angle);
 
-            // Define the axis of rotation (in this case, the z-axis)
-            let axis = new THREE.Vector3(0, 0, 1);
+            // Reset and rotate initial and reflected lights
+            initial_light.rotation.set(0, 0, angleInRadians);
+            reflected_light.rotation.set(0, 0, -angleInRadians);
 
-            // Reset the rotation of the initial light
-            initial_light.rotation.set(0, 0, 0);
-
-            // Rotate the initial light counterclockwise around the z-axis
-            initial_light.rotateOnAxis(axis, angleInRadians);
-
-            // Reset the rotation of the reflected light
-            reflected_light.rotation.set(0, 0, 0);
-
-            reflected_light.line.material.transparent = true;
-            reflected_light.line.material.opacity = 0.4;
-
-            reflected_light.cone.material.transparent = true;
-
-            reflected_light.cone.material.opacity = 0.4;
-
-            // Rotate the reflected light clockwise around the z-axis
-            reflected_light.rotateOnAxis(axis, -angleInRadians);
-
-
-            //added random offset to the angle to represent diffraction in a rough surface
-            let isVisible = !reflected_light.rotation.equals(new THREE.Euler(0, 0, 0)); // Visibility flag
-            duplicates.forEach((duplicate) => {
-                let randomOffset = THREE.Math.degToRad(Math.random() * 30);
-                let adjustedAngle = angleInRadians + randomOffset;
-
-                duplicate.rotation.set(0, 0, 0);
-                duplicate.rotateOnAxis(axis, -adjustedAngle);
-                duplicate.visible = isVisible; // Set visibility based on the flag
-
-                duplicate.line.material.transparent = true;
-                duplicate.line.material.opacity = isVisible ? .4 : 0;
-                duplicate.cone.material.transparent = true;
-                duplicate.cone.material.opacity = isVisible ? .4 : 0;
-            });
-
-
+            // Update duplicates based on the new angle
+            updateDuplicates(angleInRadians);
         };
+    }
 
+    function createAndPositionDuplicates() {
+        for (let i = 0; i < 5; i++) {
+            let randomOffset = THREE.Math.degToRad(Math.random() * 30 - 15); // Random offset within ±15 degrees
+            let adjustedAngle = -THREE.Math.degToRad(angle) + randomOffset;
 
+            let duplicate = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), reflected_position, 5, 0xffff00);
+            duplicate.rotation.set(0, 0, adjustedAngle);
+            scene.add(duplicate);
+            duplicates.push(duplicate);
+        }
+    }
 
+    function updateDuplicates(angleInRadians) {
+        duplicates.forEach((duplicate, index) => {
+            let randomOffset = THREE.Math.degToRad(Math.random() * 30 - 15); // Random offset within ±15 degrees
+            let adjustedAngle = -angleInRadians + randomOffset;
+
+            duplicate.rotation.set(0, 0, 0);
+            duplicate.rotateOnAxis(new THREE.Vector3(0, 0, 1), adjustedAngle);
+            duplicate.visible = true; // Assuming you want to always show duplicates when roughness is true
+
+            duplicate.line.material.transparent = true;
+            duplicate.line.material.opacity = 0.4;
+            duplicate.cone.material.transparent = true;
+            duplicate.cone.material.opacity = 0.4;
+        });
     }
 
 
